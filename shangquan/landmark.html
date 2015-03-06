@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LandMark</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".shop-coupon-list h4").click(function(){
+                $('.icon-chevron-right', this).toggleClass('pressed');
+                $(this).next().toggle();
+            }).filter(':first').trigger('click', true);
+        });
+    </script>
+</head>
+<body>
+<div class="head-line"></div>
+<div class="container-fluid">
+<div class="shop-info">
+    <div class="shop-detail">
+        <div class="shop-logo">
+            <img src="img/landmark_bigad.jpg" />
+            <img class="logo" style="width: 60px; height: 60px;" src="img/icon_landmark.jpg">
+        </div>
+        <h3>Landmark Bistro</h3>
+        <p>
+            Landmark Bistro 是一家法意结合，并以意大利
+            菜为主的西餐厅，它隐藏在珠江新城高德置地秋
+            商场E座首层，餐厅直对花城广场大花园，一眼
+            望去清脆鲜艳的绿色，让人心旷神怡。
+
+            超值的午餐套餐，经典的下午茶，浪漫的晚餐，
+            我们为你准备多款不同的葡萄酒，搭配不同口味
+            的小吃，惊喜的价格，舒适的环境，陪伴您享受
+            一次不一样的味觉旅行。
+        </p>
+    </div>
+
+    <div class="shop-address">
+        <div class="shop-address-mark">
+            <img src="img/mark.png">
+        </div>
+        <h5>天河区珠江新城高德置地E座107铺 <br> 020-83983353</h5>
+    </div>
+</div>
+
+    <div class="shop-title"><h4>优惠信息</h4></div>
+    <ul class="shop-coupon-list nav nav-tabs nav-stacked table-bordered">
+
+        <li>
+            <h4>挪威烤鱼 360贵宾券尊享美味!<i class="icon-chevron-right"></i></h4>
+            <div class="coupon-detail">
+                <div class="shop-coupon-img" >
+                    <img src="img/landmark_kaoyu.jpg">
+                </div>
+                <div class="coupon-text">
+                    <p class="text-left">
+                        进口挪威新鲜深海鳕鱼，经过美籍华人主厨的
+                        Alan的精心制作，搭配上等芝士酱和新鲜草莓，
+                        美味中溢出智慧，只需360贵宾券即刻尊享！
+                    </p>
+                </div>
+            </div>
+        </li>
+        <li>
+            <h4>澳洲谷饲牛柳仅35元原价70元<i class="icon-chevron-right"></i></h4>
+            <div class="coupon-detail">
+                <div class="shop-coupon-img" >
+                    <img src="img/landmark_kaoyu.jpg">
+                </div>
+                <div class="coupon-text">
+                    <p class="text-left">
+                        进口挪威新鲜深海鳕鱼，经过美籍华人主厨的
+                        Alan的精心制作，搭配上等芝士酱和新鲜草莓，
+                        美味中溢出智慧，只需360贵宾券即刻尊享！
+                    </p>
+                </div>
+            </div>
+        </li>
+        <li>
+            <h4>法国露杰鹅肝送新西兰布丁<i class="icon-chevron-right"></i></h4>
+            <div class="coupon-detail">
+                <div class="shop-coupon-img" >
+                    <img src="img/landmark_kaoyu.jpg">
+                </div>
+                <div class="coupon-text">
+                    <p class="text-left">
+                        进口挪威新鲜深海鳕鱼，经过美籍华人主厨的
+                        Alan的精心制作，搭配上等芝士酱和新鲜草莓，
+                        美味中溢出智慧，只需360贵宾券即刻尊享！
+                    </p>
+                </div>
+            </div>
+        </li>
+
+
+    </ul>
+
+
+</div>
+</body>
+</html>

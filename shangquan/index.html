@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $('.city a').click(function(){
+                $('#current-city').html($(this).text());
+                $('#cityModal').modal('hide');
+            });
+
+            $('.return-city').click(function(){
+                $warp = $(this).parents('.modal-body-warp');
+                $warp.fadeOut(200, function(){
+                    $warp.prev().fadeIn(200);
+                });
+            });
+
+            $('.hot-city').find('.city').click(function(){
+                $('#cityModal').modal('hide');
+                $('#current-city').html($(this).text());
+            });
+
+            $.getJSON('js/region.js', function(result){
+                var html = '';
+                var hothtml = '';
+                $.each(result.data.region, function(i, item){
+                    html += '<li><a class="region" data-id="' + item.id + '" data-arrayindex="'+ i +'"><i class="icon-chevron-right"></i> '+ item.name +' </a></li>'
+                });
+
+                $.each(result.data.hot_buss_region, function(i, item){
+                    hothtml += '<li><a class="region">'+ item.name +'</a></li>'
+                });
+
+                $('.hot-region').html(hothtml).find('.region').click(function(){
+                    $('#myModal').modal('hide');
+                });
+
+                $('.market-region').html(html).find('.region').click(function(){
+                    var index = $(this).data('arrayindex');
+                    var $warp = $(this).parents('.modal-body-warp');
+                    var subhtml = '';
+                    $warp.fadeOut(200);
+
+                    $.each(result.data.region[index].children, function(i, item){
+                        subhtml += '<li><a class="sub-region" data-id="' + item.id + '" data-arrayindex="'+ i +'">'+ item.name +' </a></li>'
+                    });
+                    $('.sub-region').html(subhtml);
+                    $warp.next().fadeIn(200);
+                    $('.sub-region').find('.sub-region').click(function(){
+                        $('#myModal').modal('hide');
+                        $warp.show().next().hide();
+                    });
+                    subhtml = null;
+                });
+
+                html = null;
+                hothtml = null;
+
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="header">
+<div class="head-line"></div>
+<img src="img/header_locat_icon.png" class="pull-left header-locat"><h4 class="pull-left" id="current-city">广州</h4>
+    <a href="#cityModal" role="button" data-toggle="modal" class="btn pull-right"> 切换城市</a>
+    <a  href="#myModal" role="button" data-toggle="modal" class="btn pull-right"> 切换商圈</a>
+</div>
+<div class="container-fluid">
+
+<form class="form-search">
+    <div class="input-append">
+        <input type="search" class="search-query">
+        <button type="submit" class="btn">搜索</button>
+    </div>
+</form>
+<div class="weishangquan">
+    <img src="img/weishanquan.png" />
+</div>
+
+
+    <ul class="shop-list nav nav-tabs nav-stacked table-bordered">
+        <li><i class="icon-chevron-right"></i>
+            <a href="yuenan.html" class="media">
+                <div class="pull-left">
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/icon_yuenan.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">水芝越越南料理</h4>
+                    <p class="muted">
+                        六一消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="pingchaoxuan.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/icon_pingchaoxuan.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">品潮轩</h4>
+                    <p class="muted">
+                        凭贵宾券可抵扣部份现金<br />
+                        周三午餐6折
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="landmark.html" class="media">
+                <div class="pull-left">
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/icon_landmark.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Landmark Bistro</h4>
+                    <p class="muted">
+                        20贵宾券可兑换薯条一包（小）
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html"  class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/icon_mianbaoxinyu.png">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">面包新语</h4>
+                    <p class="muted">
+                        30贵宾券可兑换浓香蛋挞一个<br>
+                        凡消费均送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/icon_bishengke.png">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">必胜客</h4>
+                    <p class="muted">
+                        凭贵宾券可享8.5折优惠
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/xuliushang.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">许留山</h4>
+                    <p class="muted">
+                        20贵宾券可兑换中杯雪梨汁
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/xiazi.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">匣子KBox</h4>
+                    <p class="muted">
+                        周末狂欢，唱3小时送3小时另送贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/baizhibaiwei.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">百滋百味涮涮锅</h4>
+                    <p class="muted">
+                        周三特价，贵宾券抵现最高100元
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/12kela.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">21克拉</h4>
+                    <p class="muted">
+                        60贵宾券可兑换迷你水果蛋糕一份
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/City-Light.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">City Lights咖啡屋</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/99.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">九毛九山西面馆</h4>
+                    <p class="muted">
+                        父亲节超值套餐只需9.9元
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/ming.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">鸣日本料理店</h4>
+                    <p class="muted">
+                        消费送极品北极贝
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/wuji.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">台北吴记老锅底麻辣火锅</h4>
+                    <p class="muted">
+                        周一至周三锅底免费，时蔬另送
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/siyanli.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">思妍丽美容中心</h4>
+                    <p class="muted">
+                        300贵宾券免费纤体SPA
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/huheji.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">重庆胡和记</h4>
+                    <p class="muted">
+                        60贵宾券可兑换特色面食小吃
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/zhuma.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">竹马日本料理</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/tianluo.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">田螺姑娘</h4>
+                    <p class="muted">
+                        消费四菜送老火乌鸡烫
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/h&m.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">H&M</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/yifengtang.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">一风堂(花城汇店)</h4>
+                    <p class="muted">
+                        周一至周周五，菜品8折优惠
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/jiangboshijiankangxie.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">江博士健康鞋专门店</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/nairuier.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">奈瑞儿塑身美颜</h4>
+                    <p class="muted">
+                        350贵宾券享1小时肌肤SPA
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/Hair-Code.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Hair Code</h4>
+                    <p class="muted">
+                        贵宾券最高抵现30
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/zhuanshengmei.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">专生美•变靓D</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/Lavazza-Espression.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Lavazza Espression</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/yishiyiqu.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">一拾一趣</h4>
+                    <p class="muted">
+                        50贵宾券可兑换店内任何一种商品
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/apple.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Sunion苹果授权专卖(高德置地店)</h4>
+                    <p class="muted">
+                        贵宾券最高抵现150
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/xingbake.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">星巴克</h4>
+                    <p class="muted">
+                        80贵宾券可兑换咖啡一杯
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/taipingyang.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">太平洋咖啡</h4>
+                    <p class="muted">
+                        贵宾券最高抵现20
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/QQBABY.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">QQBABY</h4>
+                    <p class="muted">
+                        摄影半价优惠，精美写真另送
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/jiazhoujiansheng.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">加州健身</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/shalating.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">撒拉亭茶馆</h4>
+                    <p class="muted">
+                        消费满100即送特色点心一份
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/shenanna.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">香港圣安娜饼屋</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/tea.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">中国茶叶</h4>
+                    <p class="muted">
+                        500贵宾券可兑换极品乌龙200克
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/shangyilong.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">上一笼</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/meizhenxiang.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">美珍香</h4>
+                    <p class="muted">
+                        父亲节当天所有商品7折
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/kaifeiting.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">凯菲厅</h4>
+                    <p class="muted">
+                        188贵宾券可享原价120元自助餐
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/xianshi.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">先施眼镜</h4>
+                    <p class="muted">
+                        贵宾券最高抵现88
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/moti.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">摩提工房</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/xinbailun.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">New Balance新百伦</h4>
+                    <p class="muted">
+                        六一，儿童用品买一送一
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/Good-Fit.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Good Fit港式茶餐厅</h4>
+                    <p class="muted">
+                        消费送等值贵宾券
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li><i class="icon-chevron-right"></i>
+            <a href="shop_info.html" class="media">
+                <div class="pull-left" >
+                    <img class="media-object" style="width: 60px; height: 60px;" src="img/gangzhimei.jpg">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">港滋美茶餐厅</h4>
+                    <p class="muted">
+                        周四套餐特价，奶茶另送
+                    </p>
+                </div>
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+
+
+
+<!-- cityModal -->
+<div id="cityModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>切换城市</h3>
+    </div>
+    <div class="modal-body">
+        <div class="modal-body-warp">
+            <div class="hot-city-container">
+                <ul class="hot-city">
+                    <li><a class="city">广州</a></li><li><a class="city">深圳</a></li>
+                    <li><a class="city">海南</a></li><li><a class="city">东莞</a></li>
+                </ul>
+            </div>
+            <ul class="nav nav-list city">
+                <li class="">
+                    <span class="initial">B</span>
+                    <span>
+                    <a>百色</a>
+                    </span>
+                </li>
+                <li class="">
+                    <span class="initial">C</span>
+                    <span>
+                    <a>郴州</a>
+                    </span>
+                </li>
+                <li class="">
+                    <span class="initial">D</span>
+                    <span>
+                    <a>儋州</a>
+                    </span>
+                </li>
+                <li class="">
+                    <span class="initial">F</span>
+                    <span>
+                    <a>佛山</a>
+                            <a>福州</a>
+                            <a>抚州</a>
+                    </span>
+                </li>
+                <li class="">
+                    <span class="initial current">G</span>
+                    <span>
+                    <a>广州</a>
+                            <a>贵阳</a>
+                    </span>
+                </li>
+                <li class="">
+                    <span class="initial">H</span>
+                    <span>
+                    <a>海口</a>
+                    <a>河源</a>
+                    <a>衡阳</a>
+                    </span>
+                </li>
+                <li class="">
+                    <span class="initial">L</span>
+                    <span>
+                    <a>连云港</a>
+                    <a>娄底</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">M</span>
+                    <span>
+                    <a>眉山</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">N</span>
+                    <span>
+                    <a>南宁</a>
+                    <a>南昌</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">Q</span>
+                    <span>
+                    <a>琼海</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">S</span>
+                    <span>
+                    <a>深圳</a>
+                    <a>三亚</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">W</span>
+                    <span>
+                    <a>武汉</a>
+                    <a>文昌</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">X</span>
+                    <span>
+                    <a>襄阳</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">Y</span>
+                    <span>
+                    <a>阳江</a>
+                    </span>
+                </li>
+                <li>
+                    <span class="initial">Z</span>
+                    <span>
+                    <a>中山</a>
+                    <a>肇庆</a>
+                    </span>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!--<div class="modal-footer">-->
+        <!--<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>-->
+        <!--<button class="btn btn-primary">Save changes</button>-->
+    <!--</div>-->
+</div>
+
+
+<!-- myModal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>切换商圈</h3>
+    </div>
+    <div class="modal-body">
+
+        <div class="modal-body-warp">
+            <div class="hot-region-container">
+                <ul class="hot-region">
+
+                </ul>
+            </div>
+        <ul class="nav nav-list market-region"></ul>
+        </div>
+
+
+        <div class="modal-body-warp">
+            <ul class="toolbar"><li><a class="return-city">返回</a></li></ul>
+            <ul class="nav nav-list sub-region">
+            </ul>
+        </div>
+
+    </div>
+    <!--<div class="modal-footer">-->
+        <!--<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>-->
+        <!--<button class="btn btn-primary">Save changes</button>-->
+    <!--</div>-->
+</div>
+
+</body>
+</html>

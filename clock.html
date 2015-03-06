@@ -1,0 +1,113 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>clock</title>
+</head>
+<body>
+      <canvas id="canvas" width="500" height="500"  style="background: #000000"></canvas>
+      <script type="text/javascript">
+
+          function clock(){
+
+              this.canvas = document.getElementById("canvas");
+              this.context = this.canvas.getContext("2d");
+              this.context.translate(250,250);
+              this.drawPanel();
+              this.timeAcount();
+              var me = this ;
+              setInterval(function(){
+
+                  me.context.clearRect(-250,-250,500,500);
+                  me.drawPanel();
+                  me.timeAcount();
+
+              },1000)
+
+          }
+
+           clock.prototype = {
+
+              drawPanel:function(){
+//                  this.context.strokeStyle = "#A9B7C6" ;
+//                  this.context.lineWidth = 3;
+//                  this.context.beginPath();
+//                  this.context.arc(150,150,100,0,2*Math.PI);
+//                  this.context.closePath();
+//                  this.context.stroke();
+                  this.context.strokeStyle = "#9876AA" ;
+                  this.context.lineWidth = 3
+                  this.context.beginPath();
+                  this.context.arc(0,0,200,0,2 * Math.PI);
+                  this.context.closePath();
+                  this.context.stroke();
+
+                  this.context.fillStyle = "#fff" ;
+                  for( var i = 0 ; i < 12 ; i++){
+                      this.context.save();
+
+                      this.context.rotate(i * Math.PI / 6);
+
+                      this.context.fillRect(190,0,10,5);
+
+//                      var hour = i + 3 > 12 ?
+
+
+                      this.context.restore();
+                  }
+
+                  for( var i = 0 ; i < 60 ; i++){
+                      this.context.save();
+
+                      this.context.rotate(i * Math.PI / 30);
+
+                      this.context.fillRect(195,0,5,2);
+                      this.context.restore();
+                  }
+
+                  for (var o = 0 ; o < 12 ;o++){
+                      var angle = o * Math.PI / 180 * 30;
+                      //计算弧度，请按公式记住
+                      var fontX = Math.round(Math.cos(angle) * (200 - 50));
+                      var fontY = Math.round(Math.sin(angle) * (200 - 50));
+                      var hourNum = o + 3 > 12 ? o + 3 -12  : o + 3;
+                      this.context.font = "bold 15px 微软雅黑" ;
+                      this.context.fillText( hourNum ,fontX, fontY);
+                  }
+
+
+
+
+
+              },
+
+              timeGo:function(angle,long,color,rAngle){
+
+
+                  this.context.save();
+
+                  this.context.fillStyle = color;
+                  this.context.rotate(angle * Math.PI / rAngle);
+                  this.context.fillRect(0,0,long,1);
+
+                  this.context.restore();
+
+
+              },
+
+               timeAcount:function(){
+
+                   var myDate = new Date();
+                   var hour = myDate.getHours() - 3 ,min = myDate.getMinutes() - 15,sec = myDate.getSeconds() - 15;
+                   this.timeGo(sec,150,"red",30);
+                   this.timeGo(min,140,"#fff",30);
+                   this.timeGo(hour,100,"#fff",6);
+               }
+
+
+
+
+          };
+            new clock();
+      </script>
+</body>
+</html>

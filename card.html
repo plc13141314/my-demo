@@ -1,0 +1,121 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+</head>
+<body>
+<div data-role="page">
+    <div data-role="content">
+
+
+        <canvas width="240" height="100" id="canvas" style="background: url(image/again.gif)"></canvas>
+        <button></button>
+
+    <script type="text/javascript">
+        (function(){
+            function guaguaCard(options){
+
+                this.options = $.extend({
+                    container:"canvas",
+                    okMsg:'恭喜你',
+                    okTips:false
+
+                },options);
+                this.init();
+
+            }
+
+             guaguaCard.prototype = {
+                init:function(){
+                    this.canvas = document.getElementById(this.options.container);
+                    this.context = this.canvas.getContext('2d');
+                    this.touch =("createTouch" in document);//判定是否为手持设备
+                    this.startEvemt =  this.touch ? 'touchstart': 'mousedown';
+                    this.moveEvent = this.touch ? 'touchmove':'mousemove';
+                    this.endEvent = this.touch ? 'touchend':'mouseup';
+                    this.context.fillStyle = "#c0c0c0";
+                    this.context.fillRect(0,0,240,100);
+                    this.doWork = false;
+                    this.canvasPos = this.canvas.getBoundingClientRect();
+                    this.options.okTips && this.awardPos();
+                    this.bind();
+
+                },
+                awardPos:function(){
+                    //输入主要区域挂奖区域的四个点的坐标
+                    var pointOne = {x:52,y:34}, pointTwo = {x:189,y:pointOne.y},pointThree = {x:pointOne.x,y:65},pointFour = {x:pointTwo.x,y:pointThree.y};
+                    this.initPoint = pointOne;
+                    this.mainAreaWidth =  pointTwo.x - pointOne.x;
+                    this.mainAreaHeight = pointThree.y - pointOne.y;
+                },
+                bind:function(){
+                    var me = this;
+                    this.canvas['on' + me.startEvemt] = function(e){
+
+                        var touch = me.touch ? e.touches[0] : e;
+                        var _x = touch.clientX - me.canvasPos.left,
+                            _y = touch.clientY - me.canvasPos.top;
+
+                        me.context.moveTo(_x,_y);
+
+                        me.doWork = true;
+                    };
+                    this.canvas['on' + me.moveEvent] = function(e){
+                        if(me.doWork){
+                            var touch = me.touch ? e.touches[0] : e;
+                            var _x = touch.clientX - me.canvasPos.left,
+                                    _y = touch.clientY - me.canvasPos.top;
+                            me.context.globalCompositeOperation = "destination-out";
+                            me.context.lineWidth = 5;
+                            me.context.strokeStyle = "#fff";
+                            me.context.lineTo(_x, _y);
+                            me.context.stroke();
+                            me.context.globalCompositeOperation = "source-over";
+                        }
+
+                    };
+                    this.canvas['on' + me.endEvent] = function(e){
+                        me.doWork = false;
+                        //可以暂时利用此处获取点的坐标
+//                        var touch = me.touch ? e.touches[0] : e;
+//                        var _x = touch.clientX - me.canvasPos.left,
+//                            _y = touch.clientY - me.canvasPos.top;
+//                        alert(_x + "+" + _y);
+                        me.options.okTips && me.okTipsFn();
+                    };
+                },
+
+                 okTipsFn:function(){
+
+                     var imgData = this.context.getImageData(this.initPoint.x,this.initPoint.y,this.mainAreaWidth,this.mainAreaHeight).data;
+                     var areaPx = imgData.length;
+                     var blankAera = 0,tipsArea = ( areaPx / 4 ) * ( 3 / 5 );
+                     for(var i = 3 ; i < areaPx ; i += 4){
+
+                         if(imgData[i] < 255){
+                             blankAera++;
+                         }
+
+                     }
+
+                     blankAera > tipsArea ? alert(this.options.okMsg) : '';
+                 }
+            };
+            $.guaguaCard =  guaguaCard;
+        })();
+
+          var   guaguaCard = new $.guaguaCard({
+                      container:"canvas",
+                      okTips:true,
+                      okMsg:'恭喜你，再来一瓶'
+               });
+
+    </script>
+    </div>
+</div>
+</body>
+
+</html>

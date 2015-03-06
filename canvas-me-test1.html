@@ -1,0 +1,117 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" >
+</head>
+<body>
+    <canvas width="1000" height="500" id='canvas' style="background: #c0c0c0"></canvas>
+    <button id="btn" value="停止" style="height: 30px;width: 90px;"> 停止</button><button id="go" value="停止" style="height: 30px;width: 90px;"> go</button>
+    <script type="text/javascript">
+        function drap(){
+            this.canvas = document.getElementById('canvas');
+            this.context = this.canvas.getContext('2d');
+            this.init();
+        }
+
+        drap.prototype={
+            init:function(){
+                var me = this;
+                this.bindEvent();
+                this.drawTriangle();
+                this.curAngle = 0;
+                this.curTimes = 0;
+
+
+            },
+            bindEvent:function(){
+                var me = this
+                document.getElementById("btn").onclick = function(){
+                    me.rotateStop();
+              };
+                document.getElementById("go").onclick = function(){
+                    me.speed = 5;
+                    me.delayRound = 0;
+                    me.stopMe = false;
+                    me.timer = setInterval(function(){
+                        me.drawCycle();
+                    },me.speed);
+                }
+            },
+            drawTriangle:function(){
+                this.context.fillStyle = "#EA7120";
+                this.context.moveTo(450,50);
+                this.context.lineTo(550,50);
+                this.context.lineTo(500,100);
+                this.context.lineTo(450,50);
+                this.context.fill();
+                this.context.save();
+            },
+
+
+            drawCycle:function(){
+                var cycleColor = ["red",'green','yellow','gray','blue','black'];
+                var startPoint = 0;
+
+
+                for(var i = 0 ; i < cycleColor.length; i++){
+                    this.context.fillStyle=cycleColor[i];
+                    this.context.beginPath();
+                    this.context.moveTo(500,280);
+                    this.context.arc(500,280,150,startPoint-this.curAngle,startPoint - Math.PI*2*(1/6)-this.curAngle,true);
+                    this.context.closePath();
+                    this.context.fill();
+                    startPoint -= Math.PI*2*(1/6);
+                }
+                if(this.curTimes == 120){
+                    this.curTimes = 0;
+                    if(this.stopMe ){
+                        this.delayRound++
+                    }
+
+                }
+
+                this.curAngle -= Math.PI*2*(3/360);
+                this.curTimes++;
+            },
+            rotateStop:function(){
+                var me = this;
+                var result = ['红色','绿色','黄色','灰色','蓝色','黑色'];
+                var resultVal = [100,0,20,40,60,80];
+                var resultMain = Math.floor(Math.random()* result.length);
+                var angle = resultVal[resultMain];
+                this.stopMe = true;
+                this.speed +=15;
+
+                clearInterval(this.timer);
+                console.log(resultVal[resultMain]);
+                this.roundStop(20,1,0,function(){
+                    me.roundStop(35,1,0,function(){
+                        me.roundStop(60,1,angle,function(){
+                            alert("你抽中了" + result[resultMain]);
+                        });
+                    });
+                });
+            },
+            roundStop:function(speed,rotateTimes,stopAngle,callback){
+                var me = this;
+                clearInterval(this.timer);
+                if(speed == 0 || !speed || typeof  speed == 'undefined'){
+                    return false;
+                }
+                this.timer = setInterval(function(){
+                    me.drawCycle();
+                    me.curTimes == stopAngle + 1 ? rotateTimes -= 1 :'';
+                    //rotateTimes == 0 && clearInterval(me.timer);
+                    if(rotateTimes == 0){
+                        clearInterval(me.timer);
+                        callback && callback();
+                    }
+                },speed);
+
+            }
+        };
+        var go =new drap();
+    </script>
+</body>
+</html>
